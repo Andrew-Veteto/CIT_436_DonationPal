@@ -1,0 +1,7 @@
+.Footer-wrapper {
+    bottom: 0;
+    width: 100%;
+    font-size: calc(10px + 2vmin);
+    color: white;
+    margin-top: 5px;
+}

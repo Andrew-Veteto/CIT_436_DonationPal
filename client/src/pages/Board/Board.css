@@ -1,0 +1,12 @@
+.main-body{
+    padding-left: 15%;
+    padding-right: 15%;
+    margin-bottom: 30px;
+}
+
+.campaignList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
