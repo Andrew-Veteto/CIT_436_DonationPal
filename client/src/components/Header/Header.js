@@ -1,7 +1,17 @@
-import { Link as RouterLink } from 'react-router-dom';
-import '../Header/Header.css'
+import { Navigate, Link as RouterLink } from 'react-router-dom';
+import '../Header/Header.css';
+import useToken from '../../hooks/useToken';
 
 function Header() {
+
+    const {token, setToken} = useToken();
+
+    const handleLogout = () => {
+        setToken(null);
+        return <Navigate to="/logout" replace/>;
+    }
+
+
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-light bg-info">
@@ -15,14 +25,22 @@ function Header() {
                             <li className="nav-item">
                                 <RouterLink to='/' className='Header-link'>Home</RouterLink>
                             </li>
+                            <li className='nav-item'>
+                                <RouterLink to='/profile' className='Header-link'>Profile</RouterLink>
+                            </li>
+                            <li className='nav-item'>
+                                {token ? (
+                                    <RouterLink to='/logout' onClick={handleLogout} className='Header-link'>Logout</RouterLink>
+                                ) : (
+                                    <RouterLink to='/login' className='Header-link'>Login</RouterLink>
+                                )}
+                            </li>
                         </ul>
                     </div>
                 </div>
             </nav>
         </div>
-    )
+    );
 }
-
-//<RouterLink to='/' className='Header-link'>Home</RouterLink>
 
 export default Header;

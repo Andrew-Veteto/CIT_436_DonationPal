@@ -27,6 +27,13 @@ router.get('/donations', async (req, res) => {
     res.json(donations);
 });
 
+// Get all Donations related to a user
+router.get('/donations/:id', async (req, res) => {
+    const user_id = req.params.id;
+    const donations = await Donation.find({ user_id: new ObjectId(user_id) });
+    res.json(donations);
+});
+
 // Gets a Campaign based on ID then gets all donations for that campaign
 router.get('/campaigns/:id', async (req, res) => {
     const id = req.params.id;

@@ -1,4 +1,4 @@
-function CampaignDetails(props) {
+function DonationDetails(props) {
     return (
         <div className="card" style={{ "width": "18rem" }}>
             <div className="card-body">
@@ -12,4 +12,4 @@ function CampaignDetails(props) {
     )
 }
 
-export default CampaignDetails;
+export default DonationDetails;

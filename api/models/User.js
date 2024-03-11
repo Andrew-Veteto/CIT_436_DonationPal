@@ -12,17 +12,22 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    name: {
+        title: String,
+        first: String,
+        last: String,
     }
 });
 
-UserSchema.pre('save', async function(next){
+UserSchema.pre('save', async function (next) {
     const user = this;
     const hash = await bcrypt.hash(this.password, 10);
     this.password = hash;
     next();
 });
 
-UserSchema.methods.isValidPassword = async function(encryptedPassword) {
+UserSchema.methods.isValidPassword = async function (encryptedPassword) {
     const user = this;
     const compare = await bcrypt.compare(encryptedPassword, user.password);
     return compare;
