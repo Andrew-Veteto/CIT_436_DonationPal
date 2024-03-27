@@ -1,41 +1,35 @@
-import React, { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import axios from 'axios';
 import '../Board/Board.css'
 import Campaigns from '../../components/Campaigns/Campaigns';
+import Header from '../../components/Header/Header';
+import Splash from '../../components/Splash/Splash';
+import useDataGetter from '../../hooks/useDataGetter';
 
-function Board(props) {
-    const [campaigns, setCampaigns] = useState([]);
+function Board() {
 
-    useEffect(() => {
-      const loadCampaigns = async () => {
-        try {
-          const response = await axios.get('http://localhost:8080/api/v1/campaigns');
-          setCampaigns(() => [...response.data])
-        }
-        catch (error) {
-          console.log(error);
-        }
-      }
-  
-      loadCampaigns();
-  
-    }, [props.campaigns]);
-  
-    const campaignList = campaigns
-      .map((campaign) => (
-        <Campaigns
-          key={nanoid()}
-          _id={campaign._id}
-          name={campaign.name}
-          description={campaign.description}
-        />));
+  const [loading ,data] = useDataGetter('campaigns', 1, "");
 
+  const campaignList = data
+    .map((campaign) => (
+      <Campaigns
+        key={nanoid()}
+        _id={campaign._id}
+        name={campaign.name}
+        description={campaign.description}
+      />));
 
-    return (
+  return (
+    <div>
+      <div>
+        <Header/>
+      </div>
+      <div>
+        <Splash/>
+      </div>
       <div className='main-body'>
         <div className='campaignList'>{campaignList}</div>
       </div>
-    )
+    </div>
+  )
 }
 export default Board;

@@ -1,34 +1,17 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { nanoid } from "nanoid";
-import CampaignDetails from '../CampaignDetails/CampaignDetails';
-import DonationDetails from '../DonationsDetails/DonationsDetails';
-import '../CampaignDetailPage/CampaignDetailPage.css'
+import CampaignDetails from '../../components/CampaignDetails/CampaignDetails';
+import DonationDetails from '../../components/DonationsDetails/DonationsDetails';
+import './CampaignDetailPage.css';
+import Header from '../../components/Header/Header';
+import useDataGetter from "../../hooks/useDataGetter";
 
 function CampaignDetailPage() {
 
-    const [campaigns, setCampaign] = useState([]);
-    const [donations, setDonations] = useState([]);
     const params = useParams();
+    const [loading, data, data2] = useDataGetter('campaigns', 2, params.id);
 
-    useEffect(() => {
-        const loadCampaigns = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/api/v1/campaigns/${params.id}`);
-                setCampaign(() => [...response.data.campaigns])
-                setDonations(() => [...response.data.donations])
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }
-
-        loadCampaigns();
-
-    }, [params.id]);
-
-    const campaignDetails = campaigns
+    const campaignDetails = data
         .map((campaign) => (
             <CampaignDetails
                 key={nanoid()}
@@ -41,7 +24,7 @@ function CampaignDetailPage() {
             />
         ));
 
-    const donationDetails = donations
+    const donationDetails = data2
         .map((donation) => (
             <DonationDetails
                 key={nanoid()}
@@ -56,6 +39,9 @@ function CampaignDetailPage() {
 
     return (
         <div>
+            <div>
+                <Header />
+            </div>
             <br />
             <h1 className="text-stlying">Campaign Details</h1>
             <div>
@@ -66,7 +52,21 @@ function CampaignDetailPage() {
             <br />
             <h1 className="text-stlying">Donations</h1>
             <div className="donationList">
-                {donationDetails}
+                <div className="donation_table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Donor</th>
+                                {/* <th>User ID</th> */}
+                                <th>Donation</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {donationDetails}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     )

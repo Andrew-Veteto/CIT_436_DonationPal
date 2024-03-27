@@ -1,4 +1,5 @@
 import '../DonationsDetails/DonationsDetails.css';
+import { Link } from 'react-router-dom';
 import useDataGetter from '../../hooks/useDataGetter';
 
 function formatDate(inputDate) {
@@ -11,33 +12,30 @@ function formatDate(inputDate) {
     return formattedDate;
 }
 
-function DonationDetails(props) {
+function UserDonations(props) {
 
-    const [loading, data] = useDataGetter('users', 1, props.user_id);
+    const [loading, data ] = useDataGetter('campaigns', 1, "");
 
-    let Name = "";
     let Date = formatDate(props.date);
-
-    console.log(props);
+    let Name = "Loading...";
+    let link = "";
 
     for (let i = 0; i < data.length; i++) {
-        if (data[i]._id === props.user_id && props.name !== "") {
-            Name = data[i].name.first + " " + data[i].name.last;
+        if (props.campaign_id === data[i]._id) {
+            Name = data[i].name;
+            link = data[i]._id;
         }
-    }
-
-    if (Name === "") {
-        Name = "Anonymous";
     }
 
     return (
         <tr>
-            <th>{Name}</th>
-            {/* <th>{props.user_id}</th> */}
+            <Link to={`/details/${link}`}>
+                <th>{Name}</th>
+            </Link>
             <th>{`$${props.amount}`}</th>
             <th>{Date}</th>
         </tr>
     );
 }
 
-export default DonationDetails;
+export default UserDonations;
