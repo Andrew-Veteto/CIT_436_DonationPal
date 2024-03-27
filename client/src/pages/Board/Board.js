@@ -18,6 +18,8 @@ function Board() {
         description={campaign.description}
       />));
 
+    console.log(data);
+
   return (
     <div>
       <div>

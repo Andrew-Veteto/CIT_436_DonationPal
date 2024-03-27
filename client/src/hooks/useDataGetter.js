@@ -14,6 +14,7 @@ function useDataGetter(dataSource, returnSets, ID) {
             try {
                 if (returnSets == 1) {
                     const response = await axios.get(apiURL + '/' + dataSource + '/' + ID);
+                    console.log(apiURL + '/' + dataSource + '/' + ID);
                     setData(() => [...response.data]);
                 } else {
                     const response = await axios.get(apiURL + '/' + dataSource + '/' + ID);
