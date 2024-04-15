@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import LogoutPage from './pages/LogoutPage/LogoutPage';
+import DonationSuccess from './pages/DonationSuccess/DonationSuccess';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/details/:id' element={<CampaignDetailPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/donation_success' element={<DonationSuccess/>} />
         </Routes>
 
         <Footer />
